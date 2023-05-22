@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerar Senhas</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+</head>
+<body>
+    
+    <div class="card text-center">
+        <div class="card-header">
+            <h1 class="card-title fst-italic"><i class="bi bi-shield-check"></i>FirstPass</h1>
+        </div>
+        <div class="card-body">
+          <h2 class="card-title">Gerador de senhas</h2>
+          <p class="card-text">Configure sua senha por meio das opções abaixo</p>
+          <form class="row g-3 needs-validation" method="post" novalidate>
+            <div class="m-1 row g-3">
+                <div class="col-1 form-check form-switch">
+                    <label for="cNumeros">1234</label>
+                    <input class="form-check-input" role="switch" type="checkbox" id="cNumeros" name="itemCheck" value="num" checked>
+                </div>
+            </div>
+            <div class="m-1 row g-3">
+                <div class="col-1 form-check form-switch">
+                    <label for="cLetras">aBcD</label>
+                    <input class="form-check-input" role="switch" type="checkbox" id="cLetras" name="itemCheck" value="let" checked>
+                </div>
+            </div>
+            <div class="m-1 row g-3">
+                <div class="col-1 form-check form-switch">
+                    <label for="cSimbolos">@#$%</label>
+                    <input class="form-check-input" role="switch" type="checkbox" id="cSimbolos" name="itemCheck" value="simb" checked>
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="col">
+                    <label for="idQTD" class="form-label">Quantidade: </label>
+                    <strong id="rangeQTD">1</strong>
+                    <input type="range" class="form-range" id="idQTD" name="qtd" value="1" min="1" max="50">
+                </div>
+                <div class="col">
+                    <label for="idTamanho" class="form-label">Tamanho: </label>
+                    <strong id="rangeTam">12</strong>
+                    <input type="range" class="form-range" id="idTamanho" name="tamanho" value="12" min="1" max="50">
+                </div>
+            </div>
+        </form>
+        <hr>
+        <textarea class="form-control" id="resposta" rows="5" readonly></textarea>
+        </div>
+        <div class="card-footer text-muted fst-italic">
+            Autor: Filipe Almeida
+        </div>
+      </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="chamarGerar.js"></script>
+    <script>
+        
+        
+        var $range = document.querySelector('#idTamanho'),
+        $value = document.querySelector('#rangeTam');
+        valorRange($range, $value)        
+
+        var $range2 = document.querySelector('#idQTD'),
+        $value2 = document.querySelector('#rangeQTD');
+        valorRange($range2, $value2);
+        function valorRange(range, value){
+            range.addEventListener('input', function() {
+                value.textContent = this.value;
+            });
+        }
+
+        
+        var checkboxes = document.querySelectorAll("input[type=checkbox][name=itemCheck]");
+        let enabledSettings = []
+
+        
+        checkboxes.forEach(function(checkbox) {
+        checkbox.addEventListener('change', function() {
+            enabledSettings = 
+            Array.from(checkboxes) 
+            .filter(i => i.checked) 
+            .map(i => i.value) 
+            if(enabledSettings.length == 1){
+                var cnum = document.querySelector("#cNumeros");
+                var clet = document.querySelector("#cLetras");
+                var csim = document.querySelector("#cSimbolos");
+                if(cnum.checked) {
+                    cnum.disabled=true;
+                } else if(clet.checked) {
+                    clet.disabled=true;
+                }else if(csim.checked){
+                    csim.disabled=true;
+                }
+            }else{
+                var dis = document.querySelector('input[disabled]');
+                dis.disabled=false;
+            }
+        })
+        });
+
+
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.4.slim.min.js" integrity="sha256-a2yjHM4jnF9f54xUQakjZGaqYs/V1CYvWpoqZzC2/Bw=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-JavaScript-Templates/3.20.0/js/tmpl.min.js"></script>
+</body>
+</html>
